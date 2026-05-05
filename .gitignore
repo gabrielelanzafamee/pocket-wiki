@@ -1,0 +1,6 @@
+build/
+data/*
+!data/.gitkeep
+models/*.gguf
+!models/.gitkeep
+!models/chat_template.jinja

@@ -1,0 +1,18 @@
+{
+  "configurations": [
+    {
+      "name": "Mac",
+      "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+      "includePath": [
+        "${workspaceFolder}/src",
+        "${workspaceFolder}/build/_deps/ftxui-src/include",
+        "${workspaceFolder}/build/_deps/llama-cpp-src/include",
+        "${workspaceFolder}/build/_deps/llama-cpp-src/ggml/include",
+        "/opt/homebrew/Cellar/apache-arrow/24.0.0_1/include"
+      ],
+      "cppStandard": "c++17",
+      "intelliSenseMode": "macos-clang-arm64"
+    }
+  ],
+  "version": 4
+}
