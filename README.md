@@ -77,3 +77,5 @@ This is a hobby project — it works but there are plenty of rough edges:
 - **Hardcoded paths**: model and data paths are compile-time constants in `main.cpp` — they should be CLI arguments or a config file.
 - **No UI yet**: the `ui` mode is a stub. A proper FTXUI interface was the original plan.
 
+I just want to run this thing in < 1GB RAM (Ok probs 3/4 it's more realistic)
+Plus I would like to embed this into a raspberry and create a local voice assistance (too ambitious prob)

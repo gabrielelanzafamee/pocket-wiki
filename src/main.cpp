@@ -15,8 +15,8 @@
 
 #define MAX_BUFFER_SIZE 4096
 
-const std::string MODEL_PATH = "./models/gemma-4-E2B-it-Q4_K_M.gguf";
-const std::string TEMPLATE_NAME = "gemma";
+const std::string MODEL_PATH = "./models/Qwen3.5-0.8B-Q5_K_M.gguf";
+const std::string EMB_TEMPLATE_NAME = "chatml"; // embedding model uses chatml
 const std::string DATABASE_PATH = "./vector-database.db";
 const std::string EMB_MODEL_PATH = "./models/embeddinggemma-300M-BF16.gguf";
 const std::string DATA_PARQUET_FOLDER = "./data/wikipedia.en/20231101.en/";
@@ -24,7 +24,7 @@ const std::string DATA_PARQUET_FOLDER = "./data/wikipedia.en/20231101.en/";
 llama_model* init_llama()
 {
     llama_model_params params = llama_model_default_params();
-    llama_model* model = llama_load_model_from_file(MODEL_PATH.c_str(), params);
+    llama_model* model = llama_model_load_from_file(MODEL_PATH.c_str(), params);
     return model;
 }
 
@@ -73,8 +73,12 @@ std::string inference(
         return nullptr;
     }
 
+    // Use the model's built-in template for generative (decoder-only) models.
+    // Embedding (encoder) models override with chatml.
+    const char* tmpl = llama_model_has_encoder(model) ? EMB_TEMPLATE_NAME.c_str() : nullptr;
+
     int32_t prompt_len = llama_chat_apply_template(
-        TEMPLATE_NAME.c_str(),
+        tmpl,
         messages,
         n_messages,
         true,   // add_ass: append the assistant turn start token
@@ -383,7 +387,7 @@ void llama_chat_handler()
 
     llama_sampler_free(smpl);
     llama_free(ctx);
-    llama_free_model(model);
+    llama_model_free(model);
 }
 
 // argc; [init|chat|ui - database_path]
